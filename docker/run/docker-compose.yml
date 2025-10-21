@@ -40,13 +40,13 @@ services:
     environment:
       - SB_API_PREFIX=/secret
       - SB_STATE_DIR=/app/data
-      - SB_CERTIFICATE_FILE=/ssl/cert.pem
-      - SB_PRIVATE_KEY_FILE=/ssl/private.key
+      # - SB_CERTIFICATE_FILE=/ssl/cert.pem
+      # - SB_PRIVATE_KEY_FILE=/ssl/private.key
       - SB_PUBLIC_IP=5.144.176.141  # ЗАМЕНИТЕ на реальный IP
       - SB_API_URL=https://5.144.176.141:9139  # ЗАМЕНИТЕ на ваш домен
     volumes:
       - shadowbox-data:/app/data
-      - /etc/ssl:/ssl:ro
+      # - /etc/ssl:/ssl:ro
     networks:
       - outline-net
     deploy:
