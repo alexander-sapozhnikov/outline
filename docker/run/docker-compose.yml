@@ -34,9 +34,9 @@ services:
   # Shadowbox - на всех worker nodes
   shadowbox:
     image: quay.io/outline/shadowbox:v1.12.3
-    ports:
-      - "9139:9139"    # Management API
-      - "1024-65535:1024-65535"  # Ports for clients
+    # ports:
+    #   - "9139:9139"    # Management API
+    #   - "1024-65535:1024-65535"  # Ports for clients
     # environment:
     #   - SB_API_PREFIX=/test
     #   - SB_API_URL=https://your-domain.com:9139
