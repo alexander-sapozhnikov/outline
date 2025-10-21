@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Outline Manager - ТОЛЬКО на master node
   outline-manager:
-    image: quay.io/outline/outline-manager:v1.12.3
+    image: mro045/outline-admin:v0.2.3
     # ports:
     #   - "8080:8080"  # Web UI порт
     environment:
@@ -28,7 +28,7 @@ services:
         - "traefik.http.routers.outline.rule=Host(`outline.sapog-host.ru`)"
         - "traefik.http.routers.outline.entrypoints=websecure"
         - "traefik.http.routers.outline.tls.certresolver=letsencryptresolver"
-        - "traefik.http.services.outline.loadbalancer.server.port=8080"
+        - "traefik.http.services.outline.loadbalancer.server.port=3000"
         - "traefik.http.routers.outline.service=outline"
 
   # Shadowbox - на всех worker nodes
