@@ -2,34 +2,34 @@ version: '3.8'
 
 services:
   # Outline Manager - ТОЛЬКО на master node
-  outline-manager:
-    image: mro045/outline-admin:v0.2.3
-    # ports:
-    #   - "8080:8080"  # Web UI порт
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - outline-manager-data:/app/data
-    networks:
-      - outline-net
-      - net_app
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - "node.labels.TAG==prod_3"
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.outline.rule=Host(`outline.sapog-host.ru`)"
-        - "traefik.http.routers.outline.entrypoints=websecure"
-        - "traefik.http.routers.outline.tls.certresolver=letsencryptresolver"
-        - "traefik.http.services.outline.loadbalancer.server.port=3000"
-        - "traefik.http.routers.outline.service=outline"
+  # outline-manager:
+  #   image: mro045/outline-admin:v0.2.3
+  #   # ports:
+  #   #   - "8080:8080"  # Web UI порт
+  #   environment:
+  #     - NODE_ENV=production
+  #   volumes:
+  #     - outline-manager-data:/app/data
+  #   networks:
+  #     - outline-net
+  #     - net_app
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - "node.labels.TAG==prod_3"
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #       reservations:
+  #         memory: 256M
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - "traefik.http.routers.outline.rule=Host(`outline.sapog-host.ru`)"
+  #       - "traefik.http.routers.outline.entrypoints=websecure"
+  #       - "traefik.http.routers.outline.tls.certresolver=letsencryptresolver"
+  #       - "traefik.http.services.outline.loadbalancer.server.port=3000"
+  #       - "traefik.http.routers.outline.service=outline"
 
   # Shadowbox - на всех worker nodes
   shadowbox:
@@ -38,6 +38,10 @@ services:
     #   - "9139:9139"    # Management API
     #   - "1024-65535:1024-65535"  # Ports for clients
     environment:
+      - SB_API_PREFIX=/secret
+      - SB_STATE_DIR=/app/data
+      - SB_PRIVATE_KEY_FILE=/app/data/secret.key
+      - SB_CERTIFICATE_FILE=/app/data/cert.pem
       - SB_PUBLIC_IP=5.144.176.141  # ЗАМЕНИТЕ на реальный IP
       - SB_API_URL=https://5.144.176.141:9139  # ЗАМЕНИТЕ на ваш домен
     volumes:
@@ -55,6 +59,8 @@ services:
           memory: 1G
         reservations:
           memory: 256M
+      labels:
+        - "com.centurylinklabs.watchtower.enable=true"
 
   # Watchtower для автоматического обновления (опционально)
   watchtower:
