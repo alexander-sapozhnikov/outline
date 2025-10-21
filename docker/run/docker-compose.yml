@@ -33,20 +33,26 @@ services:
 
   # Shadowbox - на всех worker nodes
   shadowbox:
-    image: quay.io/outline/shadowbox:v1.12.3
-    # ports:
-    #   - "9139:9139"    # Management API
-    #   - "1024-65535:1024-65535"  # Ports for clients
+    image: jigsaw/outline-server
+    ports:
+      - "12345:12345/tcp"
+      - "12345:12345/udp"
     environment:
-      - SB_API_PREFIX=/secret
-      - SB_STATE_DIR=/app/data
-      # - SB_CERTIFICATE_FILE=/ssl/cert.pem
-      # - SB_PRIVATE_KEY_FILE=/ssl/private.key
-      - SB_PUBLIC_IP=5.144.176.141  # ЗАМЕНИТЕ на реальный IP
-      - SB_API_URL=https://5.144.176.141:9139  # ЗАМЕНИТЕ на ваш домен
-    volumes:
-      - shadowbox-data:/app/data
-      # - /etc/ssl:/ssl:ro
+      - ACCESS_KEY=sfdsr233fcr2236uh
+    # image: quay.io/outline/shadowbox:v1.12.3
+    # # ports:
+    # #   - "9139:9139"    # Management API
+    # #   - "1024-65535:1024-65535"  # Ports for clients
+    # environment:
+    #   - SB_API_PREFIX=/secret
+    #   - SB_STATE_DIR=/app/data
+    #   # - SB_CERTIFICATE_FILE=/ssl/cert.pem
+    #   # - SB_PRIVATE_KEY_FILE=/ssl/private.key
+    #   - SB_PUBLIC_IP=5.144.176.141  # ЗАМЕНИТЕ на реальный IP
+    #   - SB_API_URL=https://5.144.176.141:9139  # ЗАМЕНИТЕ на ваш домен
+    # volumes:
+    #   - shadowbox-data:/app/data
+    #   # - /etc/ssl:/ssl:ro
     networks:
       - outline-net
     deploy:
